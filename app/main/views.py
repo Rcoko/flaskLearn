@@ -1,6 +1,6 @@
 from flask import render_template, session, redirect, url_for, current_app
 from .. import db
-from ..models import Todo
+from ..models import Detail
 from . import main
 from .forms import NameForm
 
@@ -28,9 +28,10 @@ def index():
 
 @main.route('/test/')
 def test():
-    #todo1 = Todo(task='task 1', is_completed=False)
-    ss = Todo.objects().all()
+    #todo1 = Detail(task='task 1', is_completed=False)
+    ss = Detail.objects().all()
+    objLen = len(ss)
     s1 = ss[0]
     a = 4
     #todo1.save()
-    return s1.task
+    return s1.body
