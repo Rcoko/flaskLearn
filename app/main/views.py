@@ -1,7 +1,6 @@
 from flask import render_template, session, redirect, url_for, current_app
 from .. import db
-from ..models import User
-from ..email import send_email
+from ..models import Todo
 from . import main
 from .forms import NameForm
 
@@ -25,3 +24,13 @@ def index():
     return render_template('index.html',
                            form=form, name=session.get('name'),
                            known=session.get('known', False))
+
+
+@main.route('/test/')
+def test():
+    #todo1 = Todo(task='task 1', is_completed=False)
+    ss = Todo.objects().all()
+    s1 = ss[0]
+    a = 4
+    #todo1.save()
+    return s1.task

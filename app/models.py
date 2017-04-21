@@ -1,21 +1,26 @@
+# -- coding: utf-8 --
+
 from . import db
+from datetime import datetime
+
+class Todo(db.Document):
+    meta = {
+        'collection': 'todo',
+        'ordering': ['-create_at'],
+        'strict': False,
+    }
+
+    title = db.StringField()  #标题
+    keywords = db.StringField()  #关键词列表
+    description = db.StringField()  #描述
+    body = db.StringField()  #内容
 
 
-class Role(db.Model):
-    __tablename__ = 'roles'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
-    users = db.relationship('User', backref='role', lazy='dynamic')
-
-    def __repr__(self):
-        return '<Role %r>' % self.name
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), unique=True, index=True)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
-    def __repr__(self):
-        return '<User %r>' % self.username
+    task = db.StringField()
+    create_at = db.DateTimeField(default=datetime.now)
+    is_completed = db.BooleanField(default=False)
+
+
