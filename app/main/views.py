@@ -1,6 +1,7 @@
+# -- coding: utf-8 --
 from flask import render_template, session, redirect, url_for, current_app
 from .. import db
-from ..models import Detail
+from ..models import Detail,Contents
 from . import main
 from .forms import NameForm
 
@@ -28,10 +29,12 @@ def index():
 
 @main.route('/test/')
 def test():
-    #todo1 = Detail(task='task 1', is_completed=False)
+    content = Contents(name="test内容");
+    todo1 = Detail(title='teest title', keywords='列表列表列表',description='描述描述描述描述描述',contents=content)
+    todo1.save()
     ss = Detail.objects().all()
     objLen = len(ss)
     s1 = ss[0]
     a = 4
     #todo1.save()
-    return s1.body
+    return render_template('detail.html',detail = s1)

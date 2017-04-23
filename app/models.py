@@ -1,7 +1,16 @@
 # -- coding: utf-8 --
-
+from mongoengine import *
 from . import db
 from datetime import datetime
+
+class Categories(Document):
+    name = StringField(max_length=30, required=True)
+    artnum = IntField(default=0, required=True)
+    date = DateTimeField(default=datetime.now(), required=True)
+
+class  Contents(EmbeddedDocument):
+    name = StringField()
+    date = DateTimeField(default=datetime.now())
 
 class Detail(db.Document):
     meta = {
@@ -13,6 +22,7 @@ class Detail(db.Document):
     title = db.StringField()  #标题
     keywords = db.StringField()  #关键词列表
     description = db.StringField()  #描述
-    body = db.StringField()  #内容
+    #categories = ReferenceField(Categories)  #分类
+    contents = EmbeddedDocumentField('Contents')   #内容
 
 
