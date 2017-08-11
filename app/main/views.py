@@ -1,10 +1,10 @@
 # -- coding: utf-8 --
-from flask import render_template, session, redirect, url_for, current_app
+from flask import render_template, session, redirect, url_for, current_app, request
 from .. import db
 from ..models import Detail,Contents
 from . import main
 from .forms import NameForm
-
+import wechatsogou
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -38,3 +38,23 @@ def test():
     a = 4
     #todo1.save()
     return render_template('detail.html',detail = s1)
+
+
+
+@main.route('/content/',methods=['GET', 'POST'])
+def content():
+    keyword=request.args.get('key')
+    vx_obj = wechatsogou.WechatSogouAPI()
+    lists = []
+    sugg_keywords = []
+
+    try:
+        lists = vx_obj.search_article(keyword)
+        sugg_keywords = vx_obj.get_sugg(keyword)
+    except:
+        print('value errot')
+
+    title = '标题'
+    keywords = '关键词，关键词2，关键词3'
+    des = '描述描述描述描述'
+    return render_template('content.html',content_list = lists,title=title,keywords=keywords,des=des,sugg_keywords=sugg_keywords)

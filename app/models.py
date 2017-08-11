@@ -26,3 +26,5 @@ class Detail(db.Document):
     contents = EmbeddedDocumentField('Contents')   #内容
 
 
+
+
