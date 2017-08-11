@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-8 column">
+					<div class="row clearfix">
+						<div class="col-md-12 column">   {#-------------列表----------------#}
+                            {% for content in content_list %}
+                                 <div class="col-xs-12"  style="box-shadow:inset 0px -1px 0px grey , inset -0px 0px 0px;">
+                                     <a href="/post/?md5={{ content.article.wx_url_md5 }}"><h4 class="text-primary">{{ content.article.title }}</h4></a>
+                                     <h4 class="text-muted"><small>{{ content.article.abstract }}</small></h4>
+                                 </div>
+                             {% endfor %}
+						</div>
+					</div>
+
+
+
+                    <br><br><br>
+
+
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+                            <div class="row">
+                                {% for sugg_keyword in sugg_keywords %}
+                                  <div class="col-md-3">
+                                     <a href="/content/?key={{ sugg_keyword }}"><h4>{{ sugg_keyword }}</h4></a>
+                                  </div>
+                                {% endfor %}
+                            </div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 column">
+                    <div class="row">
+                        {% for sugg_keyword in sugg_keywords %}
+                          <div class="col-md-12">
+                             <a href="/content/?key={{ sugg_keyword }}"><h4>{{ sugg_keyword }}</h4></a>
+                          </div>
+                        {% endfor %}
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+    <br><br><br>
+{% endblock %}
